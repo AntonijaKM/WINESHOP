@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "631897077036",
+    "firebase_url": "https://wineshop-277e3.firebaseio.com",
+    "project_id": "wineshop-277e3",
+    "storage_bucket": "wineshop-277e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631897077036:android:1fd6cfb144a8e98b",
+        "android_client_info": {
+          "package_name": "ba.sum.fpmoz.wineshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "631897077036-c07ouf642lkjm477le5hr0m55g0lkavm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ba.sum.fpmoz.wineshop",
+            "certificate_hash": "753edce1362655e8e3b3f961a9c2c1703b31ec72"
+          }
+        },
+        {
+          "client_id": "631897077036-aikgln7udubu81mvnphvip04bjtu63cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv2D4Ap6vxWwX7-Oei1pfuVLfteUjQWRs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "631897077036-aikgln7udubu81mvnphvip04bjtu63cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
