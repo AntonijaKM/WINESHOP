@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.internal.service.Common;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -25,24 +26,39 @@ import ba.sum.fpmoz.wineshop.model.Korisnik;
 
 public class RegistracijaAktivnost extends AppCompatActivity {
 
-    TextView email_txt, lozinka_txt;
-    TextView registracija_btn;
+    EditText email_txt;
+    EditText lozinka_txt;
+    Button registracija_btn;
+    Button login_btn;
+    TextView uvod_txt;
+
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registracija_aktivnost);
 
-        email_txt = (TextView) findViewById(R.id.email_txt);
-        lozinka_txt = (TextView) findViewById(R.id.lozinka_txt);
-        registracija_btn = (Button)findViewById(R.id.registracija_btn);
+        auth = FirebaseAuth.getInstance();
 
-        final FirebaseDatabase database=FirebaseDatabase.getInstance();
+        if (auth.getCurrentUser() != null) {
+            Intent i = new Intent(RegistracijaAktivnost.this, PocetnaAktivnost.class);
+            startActivity(i);
+            finish();
+        }
+
+        this.email_txt = findViewById(R.id.email_txt);
+        this.lozinka_txt = findViewById(R.id.lozinka_txt);
+        this.registracija_btn = findViewById(R.id.registracija_btn);
+        this.login_btn = findViewById(R.id.login_btn);
+        this.uvod_txt=findViewById(R.id.uvod_txt);
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference table_korisnik = database.getReference("korisnik");
 
-        registracija_btn.setOnClickListener(new View.OnClickListener() {
+        login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final ProgressDialog mDialog = new ProgressDialog(RegistracijaAktivnost.this);
                 mDialog.setMessage("Pričekajte molim");
                 mDialog.show();
@@ -50,17 +66,21 @@ public class RegistracijaAktivnost extends AppCompatActivity {
                 table_korisnik.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.child(email_txt.getText().toString()).exists())
-                        {
+                        if (dataSnapshot.child(email_txt.getText().toString()).exists()) {
                             mDialog.dismiss();
-                            Toast.makeText(RegistracijaAktivnost.this, "Email već postoji!", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            mDialog.dismiss();
-                            Korisnik korisnik = new Korisnik(email_txt.getText().toString(),lozinka_txt.getText().toString());
-                            table_korisnik.child(email_txt.getText().toString()).setValue(korisnik);
-                            Toast.makeText(RegistracijaAktivnost.this, "Registracija uspješna", Toast.LENGTH_SHORT).show();
-                            finish();
+                            Korisnik korisnik = dataSnapshot.child(email_txt.getText().toString()).getValue(Korisnik.class);
+                            if (korisnik.getLozinka().equals(lozinka_txt.getText().toString())) {
+                                {
+                                    Intent homeIntent = new Intent(RegistracijaAktivnost.this, PocetnaAktivnost.class);
+                                    startActivity(homeIntent);
+                                    finish();
+
+                                }
+                            } else {
+                                Toast.makeText(RegistracijaAktivnost.this, "Neuspješna prijava", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(RegistracijaAktivnost.this, "Korisnik ne postoji", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -71,7 +91,21 @@ public class RegistracijaAktivnost extends AppCompatActivity {
                 });
             }
         });
+        registracija_btn.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    String email = email_txt.getText().toString();
+                                                    String lozinka = lozinka_txt.getText().toString();
 
-    }
-}
+                                                    auth.createUserWithEmailAndPassword(email, lozinka)
+                                                            .addOnCompleteListener(RegistracijaAktivnost.this, new OnCompleteListener<AuthResult>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                    Toast.makeText(getApplicationContext(), "Uspješno ste registrirani.", Toast.LENGTH_LONG).show();
 
+                                                                }
+                                                            });
+                                                }
+                                            }
+        );
+    }}

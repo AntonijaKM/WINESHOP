@@ -1,48 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    app:cardElevation="4dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/wine_card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        app:cardBackgroundColor="#FFF"
+        app:cardCornerRadius="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/wine_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_launcher_background"
-            android:scaleType="centerCrop"
             />
 
         <TextView
             android:id="@+id/wine_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/overlayBackground"
-            android:text="Name of menu"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true">
-        </TextView>
+            android:padding="5dp"
+            android:text="TextView"
+            android:textSize="18dp" />
+
         <TextView
             android:id="@+id/wine_opis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/overlayBackground"
-            android:text="Describe of menu"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_alignParentBottom="true">
-        </TextView>
+            android:padding="5dp"
+            android:text="TextView"
+            android:textSize="12dp" />
 
+        <TextView
+            android:id="@+id/wine_cijena"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textSize="12dp" />
 
-
-    </RelativeLayout>
+    </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/kosarica"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/ic_shopping_cart_black_24dp"/>
     </android.support.v7.widget.CardView>
+
+    </LinearLayout>
